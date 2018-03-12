@@ -1,11 +1,13 @@
 #!/usr/bin/env python
 import sys
 import csv
+import os
 from itertools import count
 
 
 # change to whichever address you prefer
-filename = "todos.csv"
+address = os.path.expanduser("~/.mtd/")
+filename = address + "todos.csv"
 
 
 class Todo(object):
@@ -68,6 +70,10 @@ def list_to_csv(file_address, flush_list):
 
 def main(args):
     
+    #  Create directory if it does not exist
+    if not os.path.exists(address):
+        os.makedirs(address)
+
     #  Create csv file if it does not exist
     with open(filename, "a+") as new_file:
         pass
@@ -91,7 +97,7 @@ def main(args):
         the_list.remove(int(args[1]))
 
     elif command == "edit":
-        the_list.edit(int(args[1]), args[2])
+        the_list.edit(int(args[1]), " ".join(args[2:]))
 
     list_to_csv(filename, the_list)
 
